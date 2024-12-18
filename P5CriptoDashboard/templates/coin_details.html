@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details for {{ coin_id }}</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Price Chart for {{ coin_id }}</h1>
+    
+    {% if error %}
+        <p style="color: red;">Error: {{ error }}</p>
+    {% else %}
+        <div id="chart"></div>
+        <script>
+            const dates = JSON.parse('{{ dates | safe }}');
+            const values = JSON.parse('{{ values | safe }}');
+
+            const data = [{
+                x: dates.map(date => new Date(date)),  // Converte timestamps para datas
+                y: values,
+                type: 'scatter',
+                mode: 'lines',
+                name: '{{ coin_id }} Price'
+            }];
+
+            const layout = {
+                title: 'Historical Price Data for {{ coin_id }}',
+                xaxis: { title: 'Date' },
+                yaxis: { title: 'Price (USD)' }
+            };
+
+            Plotly.newPlot('chart', data, layout);
+        </script>
+    {% endif %}
+    
+    <a href="/">Back to Top Cryptos</a>
+</body>
+</html>

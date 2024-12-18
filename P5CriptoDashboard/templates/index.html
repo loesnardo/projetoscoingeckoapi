@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Top 10 Cryptocurrencies</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    
+<body>
+    <h1>Top 10 Cryptocurrencies</h1>
+    
+    <!-- Cabeçalho da tabela com as colunas -->
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Preco (USD)</th>
+                <th>Volume (24h)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coin in cryptos %}
+                <tr>
+                    <td><a href="/coin/{{ coin.id }}">{{ coin.name }} ({{ coin.symbol.upper() }})</a></td>
+                    <td>${{ coin.current_price }}</td>
+                    <td>${{ coin.volume_24h | round(2) }}</td> <!-- Volume arredondado -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
