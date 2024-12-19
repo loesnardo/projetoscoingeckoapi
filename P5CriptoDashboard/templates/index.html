@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Top 10 Cryptocurrencies</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 10 Criptomoedas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
 <body>
-    <h1>Top 10 Cryptocurrencies</h1>
-    
-    <!-- Cabeçalho da tabela com as colunas -->
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Preco (USD)</th>
-                <th>Volume (24h)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for coin in cryptos %}
+    <header>
+        <h1>Top 10 Criptomoedas</h1>
+    </header>
+
+    <main>
+        <table>
+            <thead>
                 <tr>
-                    <td><a href="/coin/{{ coin.id }}">{{ coin.name }} ({{ coin.symbol.upper() }})</a></td>
-                    <td>${{ coin.current_price }}</td>
-                    <td>${{ coin.volume_24h | round(2) }}</td> <!-- Volume arredondado -->
+                    <th>Nome</th>
+                    <th>Preço (USD)</th>
+                    <th>Volume (24h)</th>
+                    <th>Visão Detlhada</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for coin in cryptos %}
+                    <tr>
+                        <td>
+                                {{ coin.name }} ({{ coin.symbol.upper() }})
+                            </a>
+                        </td>
+                        <td>${{ coin.current_price | round(2) }}</td>
+                        <td>${{ coin.total_volume | round(2) }}</td>
+                        <td>
+                            <a href="/coin/{{ coin.id }}">
+                              <button>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-fullscreen" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd" d="M1 1v5h1V2.707L6.146 7.854l.708-.708L2.707 2H6V1H1zm14 0v5h-1V2.707L9.854 7.854l-.708-.708L13.293 2H10V1h5zM1 10v5h5v-1H2.707l4.147-4.146-.708-.708L2 13.293V10H1zm14 0v5h-5v-1h3.293l-4.147-4.146.708-.708L14 13.293V10h1z"/>
+                                </svg>
+                              </button>
+                            </a>
+                          </td>
+                          
+                          
+                          
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; {{ year }} - Rastreador Criptomoedas por Leonardo Souza</p>
+    </footer>
 </body>
 </html>

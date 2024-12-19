@@ -3,38 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details for {{ coin_id }}</title>
+    <title>Detalhes de {{ coin_id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <h1>Price Chart for {{ coin_id }}</h1>
-    
-    {% if error %}
-        <p style="color: red;">Error: {{ error }}</p>
-    {% else %}
-        <div id="chart"></div>
-        <script>
-            const dates = JSON.parse('{{ dates | safe }}');
-            const values = JSON.parse('{{ values | safe }}');
+    <header>
+        <h1>{{ coin_id.upper() }} - Dados Históricos</h1>
+    </header>
 
-            const data = [{
-                x: dates.map(date => new Date(date)),  // Converte timestamps para datas
-                y: values,
-                type: 'scatter',
-                mode: 'lines',
-                name: '{{ coin_id }} Price'
-            }];
+    <main>
+        {% if error %}
+            <p style="color: red;">Error: {{ error }}</p>
+        {% else %}
+            <div id="chart"></div>
+            <script>
+                const dates = JSON.parse('{{ dates | safe }}');
+                const values = JSON.parse('{{ values | safe }}');
 
-            const layout = {
-                title: 'Historical Price Data for {{ coin_id }}',
-                xaxis: { title: 'Date' },
-                yaxis: { title: 'Price (USD)' }
-            };
+                const data = [{
+                    x: dates.map(date => new Date(date)),  // Convert timestamps to dates
+                    y: values,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: '{{ coin_id }} Price'
+                }];
 
-            Plotly.newPlot('chart', data, layout);
-        </script>
-    {% endif %}
-    
-    <a href="/">Back to Top Cryptos</a>
+                const layout = {
+                    title: 'Price History for {{ coin_id }}',
+                    xaxis: { title: 'Date' },
+                    yaxis: { title: 'Price (USD)' },
+                    responsive: true
+                };
+
+                Plotly.newPlot('chart', data, layout);
+            </script>
+        {% endif %}
+        <a href="/" class="back-link">← Voltar Para Top Criptos</a>
+    </main>
+
+    <footer>
+        <p>&copy; {{ year }} - Rastreador Criptomoedas por Leonardo Souza</p>
+    </footer>
 </body>
 </html>
