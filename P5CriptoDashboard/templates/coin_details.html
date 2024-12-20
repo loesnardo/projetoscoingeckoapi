@@ -6,6 +6,7 @@
     <title>Detalhes de {{ coin_id }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   
 </head>
 <body>
     <header>
@@ -33,7 +34,8 @@
                     title: 'Price History for {{ coin_id }}',
                     xaxis: { title: 'Date' },
                     yaxis: { title: 'Price (USD)' },
-                    responsive: true
+                    responsive: true,
+                    height: 345 // Aumentado para refletir o incremento
                 };
 
                 Plotly.newPlot('chart', data, layout);
